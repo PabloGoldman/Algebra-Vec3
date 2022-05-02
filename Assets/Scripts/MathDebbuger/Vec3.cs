@@ -126,7 +126,7 @@ namespace CustomMath
 
         public static implicit operator Vec3(Vector3 v)
         {
-            throw new NotImplementedException();
+            return v;
         }
         #endregion
 
@@ -135,6 +135,7 @@ namespace CustomMath
         {
             return "X = " + x.ToString() + "   Y = " + y.ToString() + "   Z = " + z.ToString();
         }
+
         public static float Angle(Vec3 from, Vec3 to)
         {
             float value = (float)Math.Sqrt(from.sqrMagnitude * to.sqrMagnitude); //Calcula la raiz cadradrada de los cuadrados de las magnitudes 

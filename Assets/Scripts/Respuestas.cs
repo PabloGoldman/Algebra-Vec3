@@ -7,45 +7,41 @@ using EjerciciosAlgebra;
 
 public class Respuestas : MonoBehaviour
 {
-    // Start is called before the first frame update
-    [SerializeField] 
-    Vec3 A;
-    [SerializeField] 
-    Vec3 B;
-
     public EjerciciosVector3.Ejercicio ejercicio;
-
-    private Vector3 result;
-
-    [SerializeField]
+    public Color vectorColor = Color.red;
+    [Space(10f)]
+    public Vector3 a;
+    public Vector3 b;
 
     void Start()
     {
-        Vector3Debugger.AddVector(transform.position, A, Color.yellow, "A");
-        Vector3Debugger.AddVector(transform.position, B, Color.blue, "B");
-        Vector3Debugger.AddVector(transform.position, transform.position + result, Color.green, "result");
-        Vector3Debugger.EnableEditorView();
+        VectorDebugger.EnableCoordinates();
+        VectorDebugger.EnableEditorView();
+        VectorDebugger.AddVector(Vector3.zero, this.vectorColor, "Vec");
+        VectorDebugger.AddVector(Vector3.zero, Color.white, "a");
+        VectorDebugger.AddVector(Vector3.zero, Color.black, "b");
     }
-        
+       
     // Update is called once per frame
     void Update()
     {
-        Vector3Debugger.UpdatePosition("A", transform.position, A);
-        Vector3Debugger.UpdatePosition("B", transform.position, B);
-        Vector3Debugger.UpdatePosition("result", transform.position, result + transform.position);
+        VectorDebugger.UpdateColor("Vec", this.vectorColor);
+        VectorDebugger.UpdatePosition("a", this.a);
+        VectorDebugger.UpdatePosition("b", this.b);
 
         switch (ejercicio)
         {
             case EjerciciosVector3.Ejercicio.Uno:
-                Vector3Debugger.UpdatePosition("result", A + B);
+                VectorDebugger.UpdatePosition("Vec", (a + b));
                 break;
             case EjerciciosVector3.Ejercicio.Dos:
-                Vector3Debugger.UpdatePosition("result", A - B);
+                VectorDebugger.UpdatePosition("Vec", a - b);
                 break;
             case EjerciciosVector3.Ejercicio.Tres:
-                Vector3Debugger.UpdatePosition("result", Vector3.Scale(A,B));
+                VectorDebugger.UpdatePosition("Vec", Vector3.Scale(this.a, this.b));
                 break;
             case EjerciciosVector3.Ejercicio.Cuatro:
+                VectorDebugger.UpdatePosition("Vec", Vec3.Cross(a, b));
                 break;
             case EjerciciosVector3.Ejercicio.Cinco:
                 break;
@@ -62,9 +58,5 @@ public class Respuestas : MonoBehaviour
             default:
                 break;
         }
-
-        
     }
-
-  
 }
