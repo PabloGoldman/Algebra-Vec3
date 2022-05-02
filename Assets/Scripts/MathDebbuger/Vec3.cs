@@ -180,7 +180,7 @@ namespace CustomMath
         }
         public static float Dot(Vec3 a, Vec3 b)
         {
-            return a.x * b.x + a.y + b.y + a.z + b.z;
+            return a.x * b.x + a.y * b.y + a.z * b.z;
         }
         public static Vec3 Lerp(Vec3 a, Vec3 b, float t)
         {

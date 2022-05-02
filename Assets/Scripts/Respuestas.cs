@@ -15,7 +15,6 @@ public class Respuestas : MonoBehaviour
 
     float t;
 
-
     void Start()
     {
         VectorDebugger.EnableCoordinates();
