@@ -9,9 +9,12 @@ public class Respuestas : MonoBehaviour
 {
     public EjerciciosVector3.Ejercicio ejercicio;
     public Color vectorColor = Color.red;
-    [Space(10f)]
+
     public Vector3 a;
     public Vector3 b;
+
+    float t;
+
 
     void Start()
     {
@@ -43,17 +46,34 @@ public class Respuestas : MonoBehaviour
             case EjerciciosVector3.Ejercicio.Cuatro:
                 VectorDebugger.UpdatePosition("Vec", Vec3.Cross(a, b));
                 break;
-            case EjerciciosVector3.Ejercicio.Cinco:
+            case EjerciciosVector3.Ejercicio.Cinco: // Lerp
+                t += Time.deltaTime;
+
+                if (t > 1)
+                {
+                    t = 0;
+                }
+                VectorDebugger.UpdatePosition("Vec", Vec3.Lerp(a, b, t));
                 break;
             case EjerciciosVector3.Ejercicio.Seis:
+                VectorDebugger.UpdatePosition("Vec", Vec3.Max(a, b));
                 break;
             case EjerciciosVector3.Ejercicio.Siete:
+                VectorDebugger.UpdatePosition("Vec", Vec3.Project(a, b));
                 break;
             case EjerciciosVector3.Ejercicio.Ocho:
+                float num = Vector3.Distance(a, b);
+                Vector3 vector3 = a + b;
+                Vector3 normalized = ((Vector3)vector3).normalized;
+
+                VectorDebugger.UpdatePosition("Vec", num * normalized);
                 break;
             case EjerciciosVector3.Ejercicio.Nueve:
+                VectorDebugger.UpdatePosition("Vec", Vec3.Reflect(a, ((Vector3)b.normalized)));
                 break;
             case EjerciciosVector3.Ejercicio.Diez:
+                t += Time.deltaTime;
+                VectorDebugger.UpdatePosition("Vec", Vec3.LerpUnclamped(a, b, t));
                 break;
             default:
                 break;

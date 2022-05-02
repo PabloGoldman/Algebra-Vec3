@@ -375,10 +375,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29ab00eb69a029c45ad3c05a4833e2c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  A: {x: 0, y: 0, z: 0}
-  B: {x: 0, y: 0, z: 0}
-  ejercicio: 0
+  ejercicio: 4
   vectorColor: {r: 1, g: 0, b: 0, a: 1}
+  a: {x: 0, y: 0, z: 0}
+  b: {x: 0, y: 0, z: 0}
 --- !u!4 &1494290559
 Transform:
   m_ObjectHideFlags: 0

@@ -28,11 +28,6 @@ public class Tester : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-
-        }
-
         if (Input.GetKeyDown(KeyCode.O))
         {
             Vector3Debugger.TurnOffVector("elAzul");
