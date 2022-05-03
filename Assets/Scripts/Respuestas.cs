@@ -19,7 +19,7 @@ public class Respuestas : MonoBehaviour
     {
         VectorDebugger.EnableCoordinates();
         VectorDebugger.EnableEditorView();
-        VectorDebugger.AddVector(Vector3.zero, this.vectorColor, "Vec");
+        VectorDebugger.AddVector(Vector3.zero, vectorColor, "Vec");
         VectorDebugger.AddVector(Vector3.zero, Color.white, "a");
         VectorDebugger.AddVector(Vector3.zero, Color.black, "b");
     }
@@ -27,9 +27,9 @@ public class Respuestas : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        VectorDebugger.UpdateColor("Vec", this.vectorColor);
-        VectorDebugger.UpdatePosition("a", this.a);
-        VectorDebugger.UpdatePosition("b", this.b);
+        VectorDebugger.UpdateColor("Vec", vectorColor);
+        VectorDebugger.UpdatePosition("a", a);
+        VectorDebugger.UpdatePosition("b", b);
 
         switch (ejercicio)
         {
@@ -40,7 +40,7 @@ public class Respuestas : MonoBehaviour
                 VectorDebugger.UpdatePosition("Vec", a - b);
                 break;
             case EjerciciosVector3.Ejercicio.Tres:
-                VectorDebugger.UpdatePosition("Vec", Vector3.Scale(this.a, this.b));
+                VectorDebugger.UpdatePosition("Vec", Vector3.Scale(a, b));
                 break;
             case EjerciciosVector3.Ejercicio.Cuatro:
                 VectorDebugger.UpdatePosition("Vec", Vec3.Cross(a, b));
