@@ -15,7 +15,7 @@ namespace CustomMath
 
         public float sqrMagnitude { get { return SqrMagnitude(new Vec3(x, y, z)); } }
         public Vector3 normalized { get { throw new NotImplementedException(); } }
-        public float magnitude { get { throw new NotImplementedException(); } }
+        public float magnitude { get { return Magnitude(new Vec3(x, y, z)); } }
         #endregion
 
         #region constants
