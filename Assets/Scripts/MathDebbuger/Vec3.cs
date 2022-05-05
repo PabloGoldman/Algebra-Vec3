@@ -13,7 +13,7 @@ namespace CustomMath
         public float z;
         private static Vec3 zero;
 
-        public float sqrMagnitude { get { throw new NotImplementedException(); } }
+        public float sqrMagnitude { get { return SqrMagnitude(new Vec3(x, y, z)); } }
         public Vector3 normalized { get { throw new NotImplementedException(); } }
         public float magnitude { get { throw new NotImplementedException(); } }
         #endregion

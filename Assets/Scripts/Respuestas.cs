@@ -52,6 +52,7 @@ public class Respuestas : MonoBehaviour
                 {
                     t = 0;
                 }
+
                 VectorDebugger.UpdatePosition("Vec", Vec3.Lerp(a, b, t));
                 break;
             case EjerciciosVector3.Ejercicio.Seis:
