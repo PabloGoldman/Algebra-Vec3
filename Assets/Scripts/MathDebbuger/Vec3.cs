@@ -170,15 +170,15 @@ namespace CustomMath
             t = Mathf.Clamp01(t);
             return new Vec3(a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t, a.z + (b.z - a.z) * t);
         }
-        public static Vec3 LerpUnclamped(Vec3 a, Vec3 b, float t)
+        public static Vec3 LerpUnclamped(Vec3 a, Vec3 b, float t) //Mismo que lerp solo que el valor de t no se clampea
         {
             return new Vec3(a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t, a.z + (b.z - a.z) * t);
         }
-        public static Vec3 Max(Vec3 a, Vec3 b)
+        public static Vec3 Max(Vec3 a, Vec3 b) //Devuelve un vector con los valores mas altos de x, y & z de los 2 vectores ingresados
         {
             return new Vec3(Mathf.Max(a.x, b.x), Mathf.Max(a.y, b.y), Mathf.Max(a.z, b.z));
         }
-        public static Vec3 Min(Vec3 a, Vec3 b)
+        public static Vec3 Min(Vec3 a, Vec3 b) //Devuelve un vector con los valores mas bajos de x, y & z de los 2 vectores ingresados
         {
             return new Vec3(Mathf.Min(a.x, b.x), Mathf.Min(a.y, b.y), Mathf.Min(a.z, b.z));
         }
