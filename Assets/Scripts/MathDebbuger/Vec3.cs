@@ -140,7 +140,7 @@ namespace CustomMath
         {
             return Mathf.Acos(Mathf.Sqrt(Mathf.Pow(to.x + from.y, 2) + Mathf.Pow(to.y + from.y, 2) + Mathf.Pow(to.z + from.z, 2))) * Mathf.Rad2Deg;
 
-        } //https://answers.unity.com/questions/1294512/how-vectorangle-works-internally-in-unity.html
+        }
         public static Vec3 ClampMagnitude(Vec3 vector, float maxLength) //Acortar la magnitud (fija un limite)
         {
             return new Vec3((vector / Magnitude(vector)) * maxLength);
@@ -190,7 +190,16 @@ namespace CustomMath
         {
             //Producto punto vendria a ser la proyeccion de A sobre B multiplicado por la magnitud de B, si le dividimos a eso la magnitud de B
             //sacamos la magnitud de la proyeccion de A sobre B, si lo multiplicamos la direccion y por ende el vector proyeccion
-            return new Vec3((Dot(vector, onNormal) / (onNormal.magnitude * onNormal.magnitude)) * onNormal);
+
+            float num = Dot(onNormal, onNormal);
+
+            if (num < Mathf.Epsilon)
+            {
+                return zero;
+            }
+
+            float num2 = Dot(vector, onNormal);
+            return new Vec3(onNormal.x * num2 / num, onNormal.y * num2 / num, onNormal.z * num2 / num);
         }
         public static Vec3 Reflect(Vec3 inDirection, Vec3 inNormal)
         {
