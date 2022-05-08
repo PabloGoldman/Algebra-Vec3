@@ -7,12 +7,12 @@ public class RoomManager : MonoBehaviour
 {
     public List<Room> rooms;
 
-    int cameraRoomNumber = 0;
+    int playerRoomNumber = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        rooms = new List<Room>();
+
     }
 
     // Update is called once per frame
@@ -22,16 +22,17 @@ public class RoomManager : MonoBehaviour
         {
             if (!room.inRoom)
             {
-                room.gameObject.SetActive(false);
+                room.DisableWalls();
             }
             else
             {
-                room.gameObject.SetActive(true);
+                room.EnableWalls();
             }
         }
     }
     public void AddRoom(Room roomToAdd)
     {
-
+        rooms.Add(roomToAdd);
+        roomToAdd.roomID = rooms.Count;
     }
 }

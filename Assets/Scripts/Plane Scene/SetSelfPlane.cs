@@ -12,6 +12,7 @@ public class SetSelfPlane : MonoBehaviour
     void Start()
     {
         plane = new Planes(transform.forward, transform.position);
+        room.AddMesh(this);
         room.AddPlane(this.plane);
     }
 
