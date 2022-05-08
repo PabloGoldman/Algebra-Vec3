@@ -136,31 +136,14 @@ namespace CustomMath
             return "X = " + x.ToString() + "   Y = " + y.ToString() + "   Z = " + z.ToString();
         }
 
-        public static float Angle(Vec3 from, Vec3 to)
+        public static float Angle(Vec3 from, Vec3 to) //Devuelve el angulo formado entre from y to, por medio de hacer algo parecido a pitagoras
         {
-            float value = (float)Math.Sqrt(from.sqrMagnitude * to.sqrMagnitude); //Calcula la raiz cadradrada de los cuadrados de las magnitudes 
-            if (value < 1E-15f) // Se compara el resutado contra kEpsilonNormalSqrt (Un numero muy pequeño)
-            {
-                return 0f; //En caso de que sea menor se redondea a 0
-            }
-
-            float aux = Mathf.Clamp(Dot(from, to) / value, -1f, 1f); //Hace el calculo para conseguir la magnitud normalizada y lo clampea entre 1 y -1
-            return (float)Math.Acos(aux) * 57.29578f; //Multiplica el "Acos" del resultado * PI / 3
+            return Mathf.Acos(Mathf.Sqrt(Mathf.Pow(to.x + from.y, 2) + Mathf.Pow(to.y + from.y, 2) + Mathf.Pow(to.z + from.z, 2))) * Mathf.Rad2Deg;
 
         } //https://answers.unity.com/questions/1294512/how-vectorangle-works-internally-in-unity.html
-        public static Vec3 ClampMagnitude(Vec3 vector, float maxLength)
+        public static Vec3 ClampMagnitude(Vec3 vector, float maxLength) //Acortar la magnitud (fija un limite)
         {
-            float num = vector.sqrMagnitude; //Asigna a "num" la magnitud al cuadrado
-            if (num > maxLength * maxLength) // verifica contra el maximo al cuadrado
-            {
-                float num2 = (float)Math.Sqrt(num); //En caso de que sea menor, calcula la raiz cuadrada
-                float num3 = vector.x / num2;
-                float num4 = vector.y / num2;
-                float num5 = vector.z / num2; //Y normaliza los ejes
-                return new Vec3(num3 * maxLength, num4 * maxLength, num5 * maxLength); //retorna los valores normalizados multiplicados por el maximo
-            }
-
-            return vector;
+            return new Vec3((vector / Magnitude(vector)) * maxLength);
         }
         public static float Magnitude(Vec3 vector)
         {
@@ -205,15 +188,9 @@ namespace CustomMath
         }
         public static Vec3 Project(Vec3 vector, Vec3 onNormal)
         {
-            float num = Dot(onNormal, onNormal);
-
-            if (num < Mathf.Epsilon)
-            {
-                return zero;
-            }
-
-            float num2 = Dot(vector, onNormal);
-            return new Vec3(onNormal.x * num2 / num, onNormal.y * num2 / num, onNormal.z * num2 / num);
+            //Producto punto vendria a ser la proyeccion de A sobre B multiplicado por la magnitud de B, si le dividimos a eso la magnitud de B
+            //sacamos la magnitud de la proyeccion de A sobre B, si lo multiplicamos la direccion y por ende el vector proyeccion
+            return new Vec3((Dot(vector, onNormal) / (onNormal.magnitude * onNormal.magnitude)) * onNormal);
         }
         public static Vec3 Reflect(Vec3 inDirection, Vec3 inNormal)
         {
@@ -259,14 +236,3 @@ namespace CustomMath
     }
 
 }
-
-
-//Ejercicio 1: SUMA vectores
-//Ejercicio 2: RESTA vectores
-//Ejercicio 3: Multiplica vectores
-//Ejercicio 4: Producto Cruz
-//Ejercicio 5: lerp de la trayectoria entre un vector y otro?
-//Ejercicio 6: Toma el maximo de cada eje
-//Ejercicio 7: Proyeccion
-//Ejercicio 8: Suma a y b normalizada y el largo es la distancia entre a y b
-//
