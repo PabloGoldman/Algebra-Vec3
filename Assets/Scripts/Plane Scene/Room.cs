@@ -58,6 +58,7 @@ public class Room : MonoBehaviour
             mesh.GetComponent<MeshRenderer>().enabled = true;
         }
     }
+
     public void DisableWalls()
     {
         foreach (SetSelfPlane mesh in wallsMeshes)
