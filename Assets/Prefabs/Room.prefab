@@ -816,9 +816,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   green: {fileID: 2100000, guid: 9d48b14dafd75ff42b425c20b50b7e68, type: 2}
   red: {fileID: 2100000, guid: a5341483280f0304cbc61b0ae2e3a55c, type: 2}
-  player: {fileID: 5821736639909087698, guid: 86795f3511d6e754fb580ca7202bb764, type: 3}
+  player: {fileID: 0}
   wallsMeshes: []
-  inRoom: 1
+  inRoom: 0
+  playerLooking: 0
   roomID: 0
 --- !u!1 &4058333422297128379
 GameObject:

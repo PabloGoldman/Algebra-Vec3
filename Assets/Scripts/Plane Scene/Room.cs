@@ -67,10 +67,6 @@ public class Room : MonoBehaviour
                 pointsInsideRoom++;
                 Debug.Log("Adentro de la habitacion " + roomID);
             }
-            //else 
-            //{
-            //    inRoom = false;
-            //}
         }
 
         return inRoom;

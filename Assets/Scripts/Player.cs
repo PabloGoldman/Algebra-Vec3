@@ -30,21 +30,22 @@ public class Player : MonoBehaviour
         intermediatePointsNear = new Vec3[resolutionGrid];
         middle = new Vec3[resolutionGrid];
     }
+
     private void Update()
     {
         CalculateEndsOfFrustum();
         BinarySearchInRays();
     }
 
-    private void CalculateEndsOfFrustum()//Se calcula y se dibujan los planos del frustrum
+    private void CalculateEndsOfFrustum() //Se calcula y se dibujan los planos del frustrum
     {
         cam.CalculateFrustumCorners(new Rect(0, 0, 1, 1), cam.farClipPlane, Camera.MonoOrStereoscopicEye.Mono, frustumCornerFar);  //Obtengo el Frustrum lejano
         cam.CalculateFrustumCorners(new Rect(0, 0, 1, 1), cam.nearClipPlane, Camera.MonoOrStereoscopicEye.Mono, frustumCornerNear); //Obtengo el Frustrum cercano
 
         for (int i = 0; i < maxVertexPerPlane; i++)
         {
-            frustumCornerFar[i] = FromLocalToWolrd(frustumCornerFar[i], cam.transform);
-            frustumCornerNear[i] = FromLocalToWolrd(frustumCornerNear[i], cam.transform);
+            frustumCornerFar[i] = FromLocalToWorld(frustumCornerFar[i], cam.transform);
+            frustumCornerNear[i] = FromLocalToWorld(frustumCornerNear[i], cam.transform);
 
             //ORDEN DE LOS VERTICES: 0 abajo izq, 1 arriba izq, 2 arriba der, 3 abajo der
         }
@@ -69,12 +70,13 @@ public class Player : MonoBehaviour
 
         return gridPoints.ToArray(); //transformo la lista a Array
     }
+
     Vec3 CalculateTheMiddle(Vec3 lhs, Vec3 rhs)
     {
         return new Vec3((lhs.x + rhs.x) / 2, (lhs.y + rhs.y) / 2, (lhs.z + rhs.z) / 2);
     }
 
-    private Vector3 FromLocalToWolrd(Vector3 point, Transform transformRef) //Recibe un punto y tansform de un objeto
+    private Vector3 FromLocalToWorld(Vector3 point, Transform transformRef) //Recibe un punto y tansform de un objeto
     {
         Vector3 result = Vector3.zero;
 
@@ -91,8 +93,12 @@ public class Player : MonoBehaviour
         {
             middle[i] = CalculateTheMiddle(intermediatePointsNear[i], intermediatePointsFar[i]);
         }
-    }
 
+        for (int i = 0; i < resolutionGrid; i++)
+        {
+            middle[i] = CalculateTheMiddle(middle[i], intermediatePointsFar[i]);
+        }
+    }
 
     private void OnDrawGizmos()
     {
