@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    List<Room> rooms = new List<Room>();
+    List<Room> rooms;
 
     Camera cam;
     const uint maxVertexPerPlane = 4;
@@ -48,9 +48,9 @@ public class Player : MonoBehaviour
         BinarySearchInRays();
     }
 
-    public void AddRoom(Room roomToAdd)
+    public void SetRoom(List<Room> roomToAdd)
     {
-        rooms.Add(roomToAdd);
+        rooms = roomToAdd;
     }
 
     private void CalculateEndsOfFrustum()//Se calcula y se dibujan los planos del frustrum
@@ -104,7 +104,12 @@ public class Player : MonoBehaviour
 
     void BinarySearchInRays()
     {
-        
+        for (int i = 0; i < resolutionGrid; i++)
+        {
+            middle[i] = CalculateTheMiddle(intermediatePointsNear[i], intermediatePointsFar[i]);
+        }
+
+        Debug.Log(binarySearchOutRange);
     }
 
 
@@ -112,6 +117,8 @@ public class Player : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
+        if (!Application.isPlaying) return;
+
         Gizmos.color = Color.yellow;
 
         for (int i = 0; i < maxVertexPerPlane; i++)

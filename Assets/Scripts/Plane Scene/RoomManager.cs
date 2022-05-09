@@ -5,6 +5,8 @@ using CustomMath;
 
 public class RoomManager : MonoBehaviour
 {
+    [SerializeField] Player player;
+
     public List<Room> rooms;
 
     int playerRoomNumber = 0;
@@ -12,7 +14,7 @@ public class RoomManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        player.SetRoom(rooms);
     }
 
     // Update is called once per frame
