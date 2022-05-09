@@ -5,13 +5,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    List<Room> rooms;
-
     Camera cam;
     const uint maxVertexPerPlane = 4;
     int resolutionGrid = 10;
-
-    bool binarySearchOutRange;
 
     Vector3[] frustumCornerFar = new Vector3[maxVertexPerPlane];
     Vector3[] frustumCornerNear = new Vector3[maxVertexPerPlane];
@@ -24,7 +20,7 @@ public class Player : MonoBehaviour
     Vec3[] intermediatePointsFar;
     Vec3[] intermediatePointsNear;
 
-    Vec3[] middle; //Puntos medios en el negro del coso
+    public Vec3[] middle; //Puntos medios en el negro del coso
 
     private void Start()
     {
@@ -36,21 +32,8 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
-        foreach (Room room in rooms)
-        {
-            for (int i = 0; i < middle.Length; i++)
-            {
-                room.CheckPointInRoom(middle[i]);
-            }
-        }
-
         CalculateEndsOfFrustum();
         BinarySearchInRays();
-    }
-
-    public void SetRoom(List<Room> roomToAdd)
-    {
-        rooms = roomToAdd;
     }
 
     private void CalculateEndsOfFrustum()//Se calcula y se dibujan los planos del frustrum
@@ -108,13 +91,9 @@ public class Player : MonoBehaviour
         {
             middle[i] = CalculateTheMiddle(intermediatePointsNear[i], intermediatePointsFar[i]);
         }
-
-        Debug.Log(binarySearchOutRange);
     }
 
 
-
-#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         if (!Application.isPlaying) return;
@@ -149,5 +128,4 @@ public class Player : MonoBehaviour
             Gizmos.DrawSphere(middle[i], .2f);
         }
     }
-#endif
 }

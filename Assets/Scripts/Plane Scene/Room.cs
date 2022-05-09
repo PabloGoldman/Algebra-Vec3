@@ -4,7 +4,9 @@ using UnityEngine;
 using CustomMath;
 public class Room : MonoBehaviour
 {
-    [SerializeField] GameObject player;
+    [SerializeField] Material green, red;
+
+    [SerializeField] Player player;
 
     public List<SetSelfPlane> wallsMeshes = new List<SetSelfPlane>();
 
@@ -12,7 +14,11 @@ public class Room : MonoBehaviour
 
     public bool inRoom = true;
 
+    public bool playerLooking = false;
+
     public int roomID;
+
+    int pointsInsideRoom = 0;
 
     public void AddPlane(Planes planeToAdd)
     {
@@ -26,10 +32,26 @@ public class Room : MonoBehaviour
 
     private void Update()
     {
-        CheckPointInRoom(player.transform.position);
+        Debug.Log(inRoom);
+
+        inRoom = CheckEnabled(); //Chequea si el jugador o alguno de los puntos del frustrum estan en el room
     }
 
-    public void CheckPointInRoom(Vec3 pointToSearch)
+    public bool CheckEnabled()
+    {
+        pointsInsideRoom = 0;
+
+        CheckPointInRoom(player.transform.position);
+
+        for (int i = 0; i < player.middle.Length; i++)
+        {
+            CheckPointInRoom(player.middle[i]);
+        }
+
+        return pointsInsideRoom > 0;
+    }
+
+    public bool CheckPointInRoom(Vec3 pointToSearch)
     {
         int checkedPlanes = 0;
 
@@ -42,21 +64,24 @@ public class Room : MonoBehaviour
 
             if (checkedPlanes == planesInRoom.Count)
             {
-                inRoom = true;
+                pointsInsideRoom++;
                 Debug.Log("Adentro de la habitacion " + roomID);
             }
-            else
-            {
-                inRoom = false;
-            }
+            //else 
+            //{
+            //    inRoom = false;
+            //}
         }
+
+        return inRoom;
     }
 
     public void EnableWalls()
     {
         foreach (SetSelfPlane mesh in wallsMeshes)
         {
-            mesh.GetComponent<MeshRenderer>().enabled = true;
+            //mesh.GetComponent<MeshRenderer>().enabled = true;
+            mesh.GetComponent<MeshRenderer>().material = green;
         }
     }
 
@@ -64,7 +89,8 @@ public class Room : MonoBehaviour
     {
         foreach (SetSelfPlane mesh in wallsMeshes)
         {
-            mesh.GetComponent<MeshRenderer>().enabled = false;
+            //mesh.GetComponent<MeshRenderer>().enabled = false;
+            mesh.GetComponent<MeshRenderer>().material = red;
         }
     }
 }

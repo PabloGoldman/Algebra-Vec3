@@ -814,6 +814,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcfe2046a5a62ae42bd409ba02716e22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  green: {fileID: 2100000, guid: 9d48b14dafd75ff42b425c20b50b7e68, type: 2}
+  red: {fileID: 2100000, guid: a5341483280f0304cbc61b0ae2e3a55c, type: 2}
   player: {fileID: 5821736639909087698, guid: 86795f3511d6e754fb580ca7202bb764, type: 3}
   wallsMeshes: []
   inRoom: 1

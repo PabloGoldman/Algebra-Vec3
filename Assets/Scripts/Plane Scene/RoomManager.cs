@@ -9,12 +9,10 @@ public class RoomManager : MonoBehaviour
 
     public List<Room> rooms;
 
-    int playerRoomNumber = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        player.SetRoom(rooms);
     }
 
     // Update is called once per frame
