@@ -12,7 +12,9 @@ public class Room : MonoBehaviour
 
     public List<Planes> planesInRoom = new List<Planes>();
 
-    public bool inRoom = true;
+    List<Room> associatedRooms = new List<Room>();
+
+    public bool seeingRoom = true;
 
     public bool playerLooking = false;
 
@@ -20,6 +22,10 @@ public class Room : MonoBehaviour
 
     int pointsInsideRoom = 0;
 
+    private void Update()
+    {
+        seeingRoom = CheckEnabled(); //Chequea si el jugador o alguno de los puntos del frustrum estan en el room
+    }
     public void AddPlane(Planes planeToAdd)
     {
         planesInRoom.Add(planeToAdd);
@@ -30,11 +36,9 @@ public class Room : MonoBehaviour
         wallsMeshes.Add(meshToAdd);
     }
 
-    private void Update()
+    public void AddAssociatedRoom(Room roomToAdd)
     {
-        Debug.Log(inRoom);
-
-        inRoom = CheckEnabled(); //Chequea si el jugador o alguno de los puntos del frustrum estan en el room
+        associatedRooms.Add(roomToAdd);
     }
 
     public bool CheckEnabled()
@@ -43,9 +47,9 @@ public class Room : MonoBehaviour
 
         CheckPointInRoom(player.transform.position);
 
-        for (int i = 0; i < player.middle.Length; i++)
+        for (int i = 0; i < player.middleData.Length; i++)
         {
-            CheckPointInRoom(player.middle[i]);
+            CheckPointInRoom(player.middleData[i].point);
         }
 
         return pointsInsideRoom > 0;
@@ -65,11 +69,10 @@ public class Room : MonoBehaviour
             if (checkedPlanes == planesInRoom.Count)
             {
                 pointsInsideRoom++;
-                Debug.Log("Adentro de la habitacion " + roomID);
             }
         }
 
-        return inRoom;
+        return seeingRoom;
     }
 
     public void EnableWalls()

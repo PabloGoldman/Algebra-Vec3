@@ -3,24 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using CustomMath;
 
-public class RoomManager : MonoBehaviour
+public class RoomManager : MonoBehaviourSingleton<Room>
 {
     [SerializeField] Player player;
 
     public List<Room> rooms;
 
-
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-    }
+        for (int i = 0; i < rooms.Count; i++) //Setea las ID's de las rooms
+        {
+            rooms[i].roomID = i;
+        }
 
+        for (int i = 0; i < rooms.Count; i++)
+        {
+            if (i > 0)
+            {
+                rooms[i].AddAssociatedRoom(rooms[i - 1]);
+            }
+
+            if (i < rooms.Count)
+            {
+                rooms[i].AddAssociatedRoom(rooms[i + 1]);
+            }
+        }
+    }
     // Update is called once per frame
     void Update()
     {
         foreach (Room room in rooms)
         {
-            if (!room.inRoom)
+            if (!room.seeingRoom)
             {
                 room.DisableWalls();
             }
@@ -28,8 +42,14 @@ public class RoomManager : MonoBehaviour
             {
                 room.EnableWalls();
             }
+
+            if (room.CheckPointInRoom(player.transform.position))
+            {
+                player.SetInRoom(room);
+            }
         }
     }
+
     public void AddRoom(Room roomToAdd)
     {
         rooms.Add(roomToAdd);

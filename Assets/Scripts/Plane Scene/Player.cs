@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     const uint maxVertexPerPlane = 4;
     int resolutionGrid = 10;
 
+    int maxDivisions = 7;
+
     Vector3[] frustumCornerFar = new Vector3[maxVertexPerPlane];
     Vector3[] frustumCornerNear = new Vector3[maxVertexPerPlane];
 
@@ -20,7 +22,17 @@ public class Player : MonoBehaviour
     Vec3[] intermediatePointsFar;
     Vec3[] intermediatePointsNear;
 
-    public Vec3[] middle; //Puntos medios en el negro del coso
+    public struct MiddlePoint
+    {
+        public Vec3 point;
+        public Room inRoom;
+    }
+
+    public MiddlePoint[] middleData;
+
+    //public Vec3[] middle; //Puntos medios en el negro del coso
+
+    public Room inRoom;
 
     private void Start()
     {
@@ -28,14 +40,22 @@ public class Player : MonoBehaviour
 
         intermediatePointsFar = new Vec3[resolutionGrid];
         intermediatePointsNear = new Vec3[resolutionGrid];
-        middle = new Vec3[resolutionGrid];
+
+        middleData = new MiddlePoint[resolutionGrid];
+
+        //middle = new Vec3[resolutionGrid];
     }
 
     private void Update()
     {
         CalculateEndsOfFrustum();
-        BinarySearchInRays();
+        BinarySearch();
     }
+
+    public void SetInRoom(Room roomIn) //Setea en que habitacion está
+    {
+        inRoom = roomIn;
+    } 
 
     private void CalculateEndsOfFrustum() //Se calcula y se dibujan los planos del frustrum
     {
@@ -87,16 +107,20 @@ public class Player : MonoBehaviour
         return result + transformRef.position; //El resutado le sumamos la posicion del objeto y retornamos las coordenadas en globales
     }
 
-    void BinarySearchInRays()
+    void BinarySearch()
     {
-        for (int i = 0; i < resolutionGrid; i++)
-        {
-            middle[i] = CalculateTheMiddle(intermediatePointsNear[i], intermediatePointsFar[i]);
-        }
+        //Si el middle esta en una habitacion conexa, tiene que ir para adelante
+        //Sino, tiene que ir para atras
 
         for (int i = 0; i < resolutionGrid; i++)
         {
-            middle[i] = CalculateTheMiddle(middle[i], intermediatePointsFar[i]);
+            for (int j = 0; j < maxDivisions; j++)
+            {
+                if (middleData[i].inRoom.roomID != this.inRoom.roomID)
+                {
+                    middleData[i].point = CalculateTheMiddle(intermediatePointsNear[i], intermediatePointsFar[i]);
+                }
+            }
         }
     }
 
@@ -131,7 +155,7 @@ public class Player : MonoBehaviour
 
         for (int i = 0; i < resolutionGrid; i++)
         {
-            Gizmos.DrawSphere(middle[i], .2f);
+            Gizmos.DrawSphere(middleData[i].point, .2f);
         }
     }
 }
