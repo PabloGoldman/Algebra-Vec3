@@ -8,6 +8,7 @@ public class SetSelfPlane : MonoBehaviour
     public Room room;
 
     public Planes plane;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,5 +16,4 @@ public class SetSelfPlane : MonoBehaviour
         room.AddMesh(this);
         room.AddPlane(this.plane);
     }
-
 }

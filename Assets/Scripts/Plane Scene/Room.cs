@@ -26,15 +26,16 @@ public class Room : MonoBehaviour
 
     private void Update()
     {
-        CheckPlayerInRoom();
+        CheckPointInRoom(player.transform.position);
     }
 
-    void CheckPlayerInRoom()
+    public void CheckPointInRoom(Vec3 pointToSearch)
     {
         int checkedPlanes = 0;
+
         foreach (Planes plane in planesInRoom)
         {
-            if (plane.GetSide(player.transform.position))
+            if (plane.GetSide(pointToSearch))
             {
                 checkedPlanes++;
             }
