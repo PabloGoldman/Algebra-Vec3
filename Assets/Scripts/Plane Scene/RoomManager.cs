@@ -42,10 +42,26 @@ public class RoomManager : MonoBehaviourSingleton<Room>
             {
                 room.EnableWalls();
             }
+        }
 
-            if (room.CheckPointInRoom(player.transform.position))
+        foreach (Room room in rooms)
+        {
+            if (room.CheckPlayerInRoom())
             {
                 player.SetInRoom(room);
+                Debug.Log("Player room: " + player.inRoom);
+            }
+        }
+
+        foreach (Room room in rooms)
+        {
+            for (int i = 0; i < player.middlePoint.Length; i++)
+            {
+                if (room.CheckPointInRoom(player.middlePoint[i])) //Setea el room del punto 
+                {
+                    player.SetPointInRoom(i, room);
+                    //Debug.Log(player.pointRoom[i]);
+                }
             }
         }
     }

@@ -20,6 +20,8 @@ public class Room : MonoBehaviour
 
     public int roomID;
 
+    int playerPointsInsideRoom = 0; //Lo separe xq se chingaba
+
     int pointsInsideRoom = 0;
 
     private void Update()
@@ -47,12 +49,32 @@ public class Room : MonoBehaviour
 
         CheckPointInRoom(player.transform.position);
 
-        for (int i = 0; i < player.middleData.Length; i++)
+        for (int i = 0; i < player.middlePoint.Length; i++)
         {
-            CheckPointInRoom(player.middleData[i].point);
+            CheckPointInRoom(player.middlePoint[i]);
         }
 
         return pointsInsideRoom > 0;
+    }
+
+    public bool CheckPlayerInRoom()
+    {
+        int checkedPlanes = 0;
+
+        foreach (Planes plane in planesInRoom)
+        {
+            if (plane.GetSide(player.transform.position))
+            {
+                checkedPlanes++;
+            }
+
+            if (checkedPlanes == planesInRoom.Count)
+            {
+                playerPointsInsideRoom++;
+            }
+        }
+
+        return playerPointsInsideRoom > 0;
     }
 
     public bool CheckPointInRoom(Vec3 pointToSearch)

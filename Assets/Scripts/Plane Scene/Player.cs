@@ -22,17 +22,10 @@ public class Player : MonoBehaviour
     Vec3[] intermediatePointsFar;
     Vec3[] intermediatePointsNear;
 
-    public struct MiddlePoint
-    {
-        public Vec3 point;
-        public Room inRoom;
-    }
+    public Room[] pointRoom;   //Es el room del punto negro, lo pongo aca xq no se puede modificar un struct de afuera xd
+    public Vec3[] middlePoint;
 
-    public MiddlePoint[] middleData;
-
-    //public Vec3[] middle; //Puntos medios en el negro del coso
-
-    public Room inRoom;
+    public Room inRoom; //Room actual del player
 
     private void Start()
     {
@@ -41,9 +34,8 @@ public class Player : MonoBehaviour
         intermediatePointsFar = new Vec3[resolutionGrid];
         intermediatePointsNear = new Vec3[resolutionGrid];
 
-        middleData = new MiddlePoint[resolutionGrid];
-
-        //middle = new Vec3[resolutionGrid];
+        pointRoom = new Room[resolutionGrid];
+        middlePoint = new Vec3[resolutionGrid];
     }
 
     private void Update()
@@ -56,6 +48,11 @@ public class Player : MonoBehaviour
     {
         inRoom = roomIn;
     } 
+
+    public void SetPointInRoom(int point, Room roomToAdd) //Setea la habitacion en la que esta el punto
+    {
+        pointRoom[point] = roomToAdd;
+    }
 
     private void CalculateEndsOfFrustum() //Se calcula y se dibujan los planos del frustrum
     {
@@ -114,12 +111,25 @@ public class Player : MonoBehaviour
 
         for (int i = 0; i < resolutionGrid; i++)
         {
+            middlePoint[i] = CalculateTheMiddle(intermediatePointsNear[i], intermediatePointsFar[i]);
+        }
+
+        for (int i = 0; i < resolutionGrid; i++)
+        {
             for (int j = 0; j < maxDivisions; j++)
             {
-                if (middleData[i].inRoom.roomID != this.inRoom.roomID)
+                if (pointRoom[i] != this.inRoom)
                 {
-                    middleData[i].point = CalculateTheMiddle(intermediatePointsNear[i], intermediatePointsFar[i]);
+                    //middlePoint[i] = CalculateTheMiddle(intermediatePointsNear[i], intermediatePointsFar[i]);
+                    Debug.Log("restamo");
                 }
+                else
+                {
+                    //middlePoint[i] = CalculateTheMiddle(intermediatePointsNear[i], intermediatePointsFar[i]);
+                    Debug.Log("sumamo");
+                }
+
+                Debug.Log(pointRoom[i]);
             }
         }
     }
@@ -155,7 +165,7 @@ public class Player : MonoBehaviour
 
         for (int i = 0; i < resolutionGrid; i++)
         {
-            Gizmos.DrawSphere(middleData[i].point, .2f);
+            Gizmos.DrawSphere(middlePoint[i], .2f);
         }
     }
 }
