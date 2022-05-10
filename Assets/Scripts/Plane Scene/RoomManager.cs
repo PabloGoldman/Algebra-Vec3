@@ -38,7 +38,7 @@ public class RoomManager : MonoBehaviourSingleton<Room>
 
             for (int i = 0; i < player.middlePoint.Length; i++)
             {
-                 Debug.Log("POINT ROOM: " + player.pointRoom[i] + i);
+                 Debug.Log("POINT : " + i + " " + player.pointRoom[i]);
             }
         }
 

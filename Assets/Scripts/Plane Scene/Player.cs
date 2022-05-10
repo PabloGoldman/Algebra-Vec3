@@ -125,22 +125,21 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.C))
         {
-            for (int j = 0; j < maxDivisions; j++)
+
+            for (int i = 0; i < resolutionGrid; i++)
             {
-                for (int i = 0; i < resolutionGrid; i++)
+                if (pointRoom[i] != this.inRoom || pointRoom[i] == null)
                 {
-                    if (pointRoom[i] != this.inRoom || pointRoom[i] == null)
-                    {
-                        middlePoint[i] = CalculateTheMiddle(intermediatePointsNear[i], middlePoint[i]);
-                        Debug.Log("restamo");
-                    }
-                    else
-                    {
-                        middlePoint[i] = CalculateTheMiddle(middlePoint[i], intermediatePointsFar[i]);
-                        Debug.Log("sumamo");
-                    }
+                    middlePoint[i] = CalculateTheMiddle(intermediatePointsNear[i], middlePoint[i]);
+                    Debug.Log("restamo");
+                }
+                else
+                {
+                    middlePoint[i] = CalculateTheMiddle(middlePoint[i], intermediatePointsFar[i]);
+                    Debug.Log("sumamo");
                 }
             }
+
         }
     }
 
