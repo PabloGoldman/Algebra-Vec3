@@ -25,9 +25,13 @@ public class Player : MonoBehaviour
     public Room[] pointRoom;   //Es el room del punto negro, lo pongo aca xq no se puede modificar un struct de afuera xd
     public Vec3[] middlePoint;
 
-    public Room inRoom; //Room actual del player
+    public struct BSTCalc
+    {
+        public Vec3 aux1;
+        public Vec3 aux2;
+    }
 
-    bool initialized;
+    public Room inRoom; //Room actual del player
 
     private void Start()
     {
@@ -38,7 +42,6 @@ public class Player : MonoBehaviour
 
         pointRoom = new Room[resolutionGrid];
         middlePoint = new Vec3[resolutionGrid];
-
 
         for (int i = 0; i < resolutionGrid; i++)
         {
@@ -56,8 +59,6 @@ public class Player : MonoBehaviour
     {
         inRoom = roomIn;
     }
-
-
 
     private void CalculateEndsOfFrustum() //Se calcula y se dibujan los planos del frustrum
     {
@@ -114,7 +115,6 @@ public class Player : MonoBehaviour
         for (int i = 0; i < resolutionGrid; i++)
         {
             middlePoint[i] = CalculateTheMiddle(intermediatePointsNear[i], intermediatePointsFar[i]);
-            initialized = true;
         }
     }
 
@@ -128,17 +128,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S))
         {
             InitializePoints();
-
-            for (int i = 0; i < resolutionGrid; i++)
-            {
-                if (pointRoom[i] != this.inRoom || pointRoom[i] == null)
-                {
-                    middlePoint[i] = CalculateTheMiddle(intermediatePointsNear[i], middlePoint[i]);
-                    Debug.Log("restamo");
-                }
-            }
         }
-
     }
 
     public void CalculatePointRooms()
