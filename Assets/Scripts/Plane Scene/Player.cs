@@ -148,15 +148,15 @@ public class Player : MonoBehaviour
 
         for (int i = 0; i < resolutionGrid; i++)
         {
-            if (pointRoom[i].associatedRooms.Contains(inRoom) || pointRoom[i].roomID == 5)
-            {
-                middlePoint[i] = CalculateTheMiddle(intermediatePointsNear[i], middlePoint[i]);
-                Debug.Log("restamo");
-            }
-            else
+            if (inRoom.associatedRooms.Contains(pointRoom[i])) //Pregunta si es conexa
             {
                 middlePoint[i] = CalculateTheMiddle(middlePoint[i], intermediatePointsFar[i]);
                 Debug.Log("sumamo");
+            }
+            else
+            {
+                middlePoint[i] = CalculateTheMiddle(middlePoint[i], intermediatePointsNear[i]);
+                Debug.Log("restamo");
             }
         }
     }

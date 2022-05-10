@@ -23,6 +23,8 @@ public class RoomManager : MonoBehaviourSingleton<Room>
 
         for (int i = 0; i < rooms.Count; i++)
         {
+            rooms[i].AddAssociatedRoom(rooms[i]);
+
             if (i > 0)
             {
                 rooms[i].AddAssociatedRoom(rooms[i - 1]);
