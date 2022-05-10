@@ -150,12 +150,14 @@ public class Player : MonoBehaviour
         {
             if (inRoom.associatedRooms.Contains(pointRoom[i])) //Pregunta si es conexa
             {
-                middlePoint[i] = CalculateTheMiddle(middlePoint[i], intermediatePointsFar[i]);
+                Vec3 actualPoint = middlePoint[i];
+                middlePoint[i] = CalculateTheMiddle(actualPoint, intermediatePointsFar[i]);  //Hay que arreglar el calculo de la mitad pero ya casi esta
                 Debug.Log("sumamo");
             }
             else
             {
-                middlePoint[i] = CalculateTheMiddle(middlePoint[i], intermediatePointsNear[i]);
+                Vec3 actualPoint = middlePoint[i];
+                middlePoint[i] = CalculateTheMiddle(actualPoint, intermediatePointsNear[i]);
                 Debug.Log("restamo");
             }
         }
