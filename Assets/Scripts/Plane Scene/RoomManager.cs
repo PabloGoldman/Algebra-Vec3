@@ -42,6 +42,22 @@ public class RoomManager : MonoBehaviourSingleton<Room>
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            foreach (Room room in rooms)
+            {
+                for (int i = 0; i < player.middlePoint.Length; i++)
+                {
+                    player.SetPointInRoom(i, null);
+
+                    if (room.CheckPointInRoom(player.middlePoint[i])) //Setea el room del punto 
+                    {
+                        player.SetPointInRoom(i, room);
+                    }
+                }
+            }
+        }
+
         foreach (Room room in rooms)
         {
             if (!room.seeingRoom)
@@ -64,6 +80,11 @@ public class RoomManager : MonoBehaviourSingleton<Room>
 
         foreach (Room room in rooms)
         {
+            //for (int i = 0; i < player.middlePoint.Length; i++)
+            //{
+            //    player.SetPointInRoom(i, null);
+            //}
+
             for (int i = 0; i < player.middlePoint.Length; i++)
             {
                 if (room.CheckPointInRoom(player.middlePoint[i])) //Setea el room del punto 

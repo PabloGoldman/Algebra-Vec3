@@ -27,6 +27,8 @@ public class Player : MonoBehaviour
 
     public Room inRoom; //Room actual del player
 
+    bool initialized;
+
     private void Start()
     {
         cam = Camera.main;
@@ -110,25 +112,39 @@ public class Player : MonoBehaviour
         return result + transformRef.position; //El resutado le sumamos la posicion del objeto y retornamos las coordenadas en globales
     }
 
+    public void InitializePoints()
+    {
+        for (int i = 0; i < resolutionGrid; i++)
+        {
+            middlePoint[i] = CalculateTheMiddle(intermediatePointsNear[i], intermediatePointsFar[i]);
+            initialized = true;
+        }
+    }
+
     void BinarySearch()
     {
-        //Si el middle esta en una habitacion conexa, tiene que ir para adelante
-        //Sino, tiene que ir para atras
-
         if (Input.GetKeyDown(KeyCode.S))
         {
+            InitializePoints();
+
             for (int i = 0; i < resolutionGrid; i++)
             {
-                middlePoint[i] = CalculateTheMiddle(intermediatePointsNear[i], intermediatePointsFar[i]);
+                if (pointRoom[i] != this.inRoom || pointRoom[i] == null)
+                {
+                    middlePoint[i] = CalculateTheMiddle(intermediatePointsNear[i], middlePoint[i]);
+                    Debug.Log("restamo");
+                }
             }
         }
 
         if (Input.GetKeyDown(KeyCode.C))
         {
+            //Si el middle esta en una habitacion conexa, tiene que ir para adelante
+            //Sino, tiene que ir para atras
 
             for (int i = 0; i < resolutionGrid; i++)
             {
-                if (pointRoom[i] != this.inRoom || pointRoom[i] == null)
+                if (pointRoom[i].associatedRooms.Contains(inRoom))
                 {
                     middlePoint[i] = CalculateTheMiddle(intermediatePointsNear[i], middlePoint[i]);
                     Debug.Log("restamo");
@@ -139,7 +155,6 @@ public class Player : MonoBehaviour
                     Debug.Log("sumamo");
                 }
             }
-
         }
     }
 

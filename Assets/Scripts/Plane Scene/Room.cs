@@ -12,7 +12,7 @@ public class Room : MonoBehaviour
 
     public List<Planes> planesInRoom = new List<Planes>();
 
-    List<Room> associatedRooms = new List<Room>();
+    public List<Room> associatedRooms = new List<Room>();
 
     public bool seeingRoom = true;
 
