@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     const uint maxVertexPerPlane = 4;
     int resolutionGrid = 10;
 
-    int maxDivisions = 7;
+    int maxDivisions = 7; //Divisiones del BST
 
     Vector3[] frustumCornerFar = new Vector3[maxVertexPerPlane];
     Vector3[] frustumCornerNear = new Vector3[maxVertexPerPlane];
@@ -36,6 +36,12 @@ public class Player : MonoBehaviour
 
         pointRoom = new Room[resolutionGrid];
         middlePoint = new Vec3[resolutionGrid];
+
+
+        for (int i = 0; i < resolutionGrid; i++)
+        {
+            middlePoint[i] = CalculateTheMiddle(intermediatePointsNear[i], intermediatePointsFar[i]);
+        }
     }
 
     private void Update()
@@ -47,7 +53,7 @@ public class Player : MonoBehaviour
     public void SetInRoom(Room roomIn) //Setea en que habitacion está
     {
         inRoom = roomIn;
-    } 
+    }
 
     public void SetPointInRoom(int point, Room roomToAdd) //Setea la habitacion en la que esta el punto
     {
@@ -109,27 +115,31 @@ public class Player : MonoBehaviour
         //Si el middle esta en una habitacion conexa, tiene que ir para adelante
         //Sino, tiene que ir para atras
 
-        for (int i = 0; i < resolutionGrid; i++)
+        if (Input.GetKeyDown(KeyCode.S))
         {
-            middlePoint[i] = CalculateTheMiddle(intermediatePointsNear[i], intermediatePointsFar[i]);
+            for (int i = 0; i < resolutionGrid; i++)
+            {
+                middlePoint[i] = CalculateTheMiddle(intermediatePointsNear[i], intermediatePointsFar[i]);
+            }
         }
 
-        for (int i = 0; i < resolutionGrid; i++)
+        if (Input.GetKeyDown(KeyCode.C))
         {
             for (int j = 0; j < maxDivisions; j++)
             {
-                if (pointRoom[i] != this.inRoom)
+                for (int i = 0; i < resolutionGrid; i++)
                 {
-                    //middlePoint[i] = CalculateTheMiddle(intermediatePointsNear[i], intermediatePointsFar[i]);
-                    Debug.Log("restamo");
+                    if (pointRoom[i] != this.inRoom || pointRoom[i] == null)
+                    {
+                        middlePoint[i] = CalculateTheMiddle(intermediatePointsNear[i], middlePoint[i]);
+                        Debug.Log("restamo");
+                    }
+                    else
+                    {
+                        middlePoint[i] = CalculateTheMiddle(middlePoint[i], intermediatePointsFar[i]);
+                        Debug.Log("sumamo");
+                    }
                 }
-                else
-                {
-                    //middlePoint[i] = CalculateTheMiddle(intermediatePointsNear[i], intermediatePointsFar[i]);
-                    Debug.Log("sumamo");
-                }
-
-                Debug.Log(pointRoom[i]);
             }
         }
     }

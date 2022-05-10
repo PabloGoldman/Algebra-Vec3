@@ -20,8 +20,6 @@ public class Room : MonoBehaviour
 
     public int roomID;
 
-    int playerPointsInsideRoom = 0; //Lo separe xq se chingaba
-
     int pointsInsideRoom = 0;
 
     private void Update()
@@ -67,14 +65,9 @@ public class Room : MonoBehaviour
             {
                 checkedPlanes++;
             }
-
-            if (checkedPlanes == planesInRoom.Count)
-            {
-                playerPointsInsideRoom++;
-            }
         }
 
-        return playerPointsInsideRoom > 0;
+        return checkedPlanes == planesInRoom.Count;
     }
 
     public bool CheckPointInRoom(Vec3 pointToSearch)
@@ -94,7 +87,7 @@ public class Room : MonoBehaviour
             }
         }
 
-        return seeingRoom;
+        return checkedPlanes == planesInRoom.Count;
     }
 
     public void EnableWalls()

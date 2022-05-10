@@ -32,6 +32,16 @@ public class RoomManager : MonoBehaviourSingleton<Room>
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Debug.Log("PLAYER ROOM: " + player.inRoom);
+
+            for (int i = 0; i < player.middlePoint.Length; i++)
+            {
+                 Debug.Log("POINT ROOM: " + player.pointRoom[i] + i);
+            }
+        }
+
         foreach (Room room in rooms)
         {
             if (!room.seeingRoom)
@@ -49,7 +59,6 @@ public class RoomManager : MonoBehaviourSingleton<Room>
             if (room.CheckPlayerInRoom())
             {
                 player.SetInRoom(room);
-                Debug.Log("Player room: " + player.inRoom);
             }
         }
 
@@ -60,7 +69,6 @@ public class RoomManager : MonoBehaviourSingleton<Room>
                 if (room.CheckPointInRoom(player.middlePoint[i])) //Setea el room del punto 
                 {
                     player.SetPointInRoom(i, room);
-                    //Debug.Log(player.pointRoom[i]);
                 }
             }
         }
