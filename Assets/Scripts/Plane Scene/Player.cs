@@ -57,10 +57,7 @@ public class Player : MonoBehaviour
         inRoom = roomIn;
     }
 
-    public void SetPointInRoom(int point, Room roomToAdd) //Setea la habitacion en la que esta el punto
-    {
-        pointRoom[point] = roomToAdd;
-    }
+
 
     private void CalculateEndsOfFrustum() //Se calcula y se dibujan los planos del frustrum
     {
@@ -121,6 +118,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void SetPointInRoom(int point, Room roomToAdd) //Setea la habitacion en la que esta el punto
+    {
+        pointRoom[point] = roomToAdd;
+    }
+
     void BinarySearch()
     {
         if (Input.GetKeyDown(KeyCode.S))
@@ -137,23 +139,24 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            //Si el middle esta en una habitacion conexa, tiene que ir para adelante
-            //Sino, tiene que ir para atras
+    }
 
-            for (int i = 0; i < resolutionGrid; i++)
+    public void CalculatePointRooms()
+    {
+        //Si el middle esta en una habitacion conexa, tiene que ir para adelante
+        //Sino, tiene que ir para atras
+
+        for (int i = 0; i < resolutionGrid; i++)
+        {
+            if (pointRoom[i].associatedRooms.Contains(inRoom) || pointRoom[i].roomID == 5)
             {
-                if (pointRoom[i].associatedRooms.Contains(inRoom))
-                {
-                    middlePoint[i] = CalculateTheMiddle(intermediatePointsNear[i], middlePoint[i]);
-                    Debug.Log("restamo");
-                }
-                else
-                {
-                    middlePoint[i] = CalculateTheMiddle(middlePoint[i], intermediatePointsFar[i]);
-                    Debug.Log("sumamo");
-                }
+                middlePoint[i] = CalculateTheMiddle(intermediatePointsNear[i], middlePoint[i]);
+                Debug.Log("restamo");
+            }
+            else
+            {
+                middlePoint[i] = CalculateTheMiddle(middlePoint[i], intermediatePointsFar[i]);
+                Debug.Log("sumamo");
             }
         }
     }

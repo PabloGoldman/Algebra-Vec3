@@ -9,12 +9,17 @@ public class RoomManager : MonoBehaviourSingleton<Room>
 
     public List<Room> rooms;
 
+    public Room nullRoom;
+
     private void Start()
     {
         for (int i = 0; i < rooms.Count; i++) //Setea las ID's de las rooms
         {
             rooms[i].roomID = i;
         }
+
+        nullRoom.roomID = rooms.Count + 1;
+        nullRoom.associatedRooms.Clear(); //Es un room que esta lejos, porque no me dejaba poner "null" como room
 
         for (int i = 0; i < rooms.Count; i++)
         {
@@ -78,13 +83,30 @@ public class RoomManager : MonoBehaviourSingleton<Room>
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            for (int i = 0; i < player.middlePoint.Length; i++)
+            {
+                player.SetPointInRoom(i, nullRoom);
+            }
+
+            foreach (Room room in rooms)
+            {
+                for (int i = 0; i < player.middlePoint.Length; i++)
+                {
+                    if (room.CheckPointInRoom(player.middlePoint[i])) //Setea el room del punto 
+                    {
+                        player.SetPointInRoom(i, room);
+                    }
+                }
+            }
+
+            player.CalculatePointRooms();
+        }
+        
+
         foreach (Room room in rooms)
         {
-            //for (int i = 0; i < player.middlePoint.Length; i++)
-            //{
-            //    player.SetPointInRoom(i, null);
-            //}
-
             for (int i = 0; i < player.middlePoint.Length; i++)
             {
                 if (room.CheckPointInRoom(player.middlePoint[i])) //Setea el room del punto 
