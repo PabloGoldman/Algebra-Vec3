@@ -141,7 +141,16 @@ public class Player : MonoBehaviour
     void BinarySearch()
     {
         //InitializePoints();
-        CalculatePointRooms();
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            InitializePoints();
+        }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            CalculatePointRooms();
+        }
     }
 
     public void CalculatePointRooms()
