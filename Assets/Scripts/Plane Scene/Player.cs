@@ -24,6 +24,8 @@ public class Player : MonoBehaviour
 
     bool firstLoad = false;
 
+
+    //SIMULA UN STRUCT
     public Room[] pointRoom;   //Es el room del punto negro, lo pongo aca xq no se puede modificar un struct de afuera xd
     public Vec3[] previousNearPos;  //Guarda la posicion anterior del middle point
     public Vec3[] previousFarPos; //Guarda la ultima posicion de "adelante"
@@ -43,6 +45,9 @@ public class Player : MonoBehaviour
 
         intermediatePointsFar = new Vec3[resolutionGrid];
         intermediatePointsNear = new Vec3[resolutionGrid];
+
+        previousNearPos = new Vec3[resolutionGrid];  //Guarda la posicion anterior del middle point
+        previousFarPos = new Vec3[resolutionGrid];
 
         pointRoom = new Room[resolutionGrid];
         middlePoint = new Vec3[resolutionGrid];
@@ -122,6 +127,9 @@ public class Player : MonoBehaviour
         for (int i = 0; i < resolutionGrid; i++)
         {
             middlePoint[i] = CalculateTheMiddle(intermediatePointsNear[i], intermediatePointsFar[i]);
+
+            previousNearPos[i] = Vec3.Zero;  //Guarda la posicion anterior del middle point
+            previousFarPos[i] = Vec3.Zero;
         }
     }
 
@@ -132,10 +140,8 @@ public class Player : MonoBehaviour
 
     void BinarySearch()
     {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            InitializePoints();
-        }
+        //InitializePoints();
+        CalculatePointRooms();
     }
 
     public void CalculatePointRooms()
@@ -149,9 +155,9 @@ public class Player : MonoBehaviour
             {
                 previousNearPos[i] = middlePoint[i]; //Si vas para adelante, guardas tu posicion actual, que es la de atras
 
-                if (previousFarPos[i] != null)
+                if (previousFarPos[i] == Vec3.Zero) //Si es cero signfica que todavia no esta seteado, es la primer iteracion
                 {
-                    middlePoint[i] = CalculateTheMiddle(middlePoint[i], intermediatePointsFar[i]); 
+                    middlePoint[i] = CalculateTheMiddle(middlePoint[i], intermediatePointsFar[i]);
                 }
                 else
                 {
@@ -161,11 +167,11 @@ public class Player : MonoBehaviour
             }
             else
             {
-                previousFarPos[i] = middlePoint[i];
+                previousFarPos[i] = middlePoint[i]; //Si vas para atras, guardas tu posicion actual, que es la de adelante
 
-                if (previousNearPos[i] != null)
+                if (previousNearPos[i] == Vec3.Zero)
                 {
-                    middlePoint[i] = CalculateTheMiddle(middlePoint[i], intermediatePointsNear[i]);  
+                    middlePoint[i] = CalculateTheMiddle(middlePoint[i], intermediatePointsNear[i]);
                 }
                 else
                 {
