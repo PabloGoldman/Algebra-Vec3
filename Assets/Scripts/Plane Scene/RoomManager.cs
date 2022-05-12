@@ -103,7 +103,7 @@ public class RoomManager : MonoBehaviourSingleton<Room>
                 }
             }
 
-            player.CalculatePointRooms();
+            //player.CalculatePointRooms();
         }
         
 

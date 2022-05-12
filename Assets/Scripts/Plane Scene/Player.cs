@@ -166,6 +166,7 @@ public class Player : MonoBehaviour
 
         for (int i = 0; i < resolutionGrid; i++)  //ESTA ENTRANDO DOS VECES ACA Y NO DEBERIA
         {
+            //Tiene que preguntar si es conexo a alguna habitacion visible
             if (inRoom.associatedRooms.Contains(pointRoom[i])) //Pregunta si es conexa
             {
                 previousNearPos[i] = middlePoint[i]; //Si vas para adelante, guardas tu posicion actual, que es la de atras
@@ -180,7 +181,7 @@ public class Player : MonoBehaviour
                 }
 
                 //Sin esta linea no se por que no funciona xd
-                previousNearPos[i] -= CalculateTheMiddle(middlePoint[i], intermediatePointsFar[i]);
+                //previousNearPos[i] -= CalculateTheMiddle(middlePoint[i], intermediatePointsFar[i]);
             }
             else
             {
@@ -194,6 +195,8 @@ public class Player : MonoBehaviour
                 {
                     middlePoint[i] = CalculateTheMiddle(middlePoint[i], previousNearPos[i]);
                 }
+
+                //previousFarPos[i] -= CalculateTheMiddle(middlePoint[i], intermediatePointsNear[i]);
             }
             
             Debug.Log(i);
