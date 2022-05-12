@@ -172,12 +172,15 @@ public class Player : MonoBehaviour
 
                 if (previousFarPos[i] == Vec3.Zero) //Si es cero signfica que todavia no esta seteado, es la primer iteracion
                 {
-                    middlePoint[i] = CalculateTheMiddle(middlePoint[i], intermediatePointsFar[i]);  
+                    middlePoint[i] = CalculateTheMiddle(middlePoint[i], intermediatePointsFar[i]);
                 }
                 else
                 {
                     middlePoint[i] = CalculateTheMiddle(middlePoint[i], previousFarPos[i]);
                 }
+
+                //Sin esta linea no se por que no funciona xd
+                previousNearPos[i] -= CalculateTheMiddle(middlePoint[i], intermediatePointsFar[i]);
             }
             else
             {
