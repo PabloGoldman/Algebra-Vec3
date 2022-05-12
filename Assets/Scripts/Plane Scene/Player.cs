@@ -22,7 +22,11 @@ public class Player : MonoBehaviour
     Vec3[] intermediatePointsFar;
     Vec3[] intermediatePointsNear;
 
+    bool firstLoad = false;
+
     public Room[] pointRoom;   //Es el room del punto negro, lo pongo aca xq no se puede modificar un struct de afuera xd
+    public Vec3[] previousNearPos;  //Guarda la posicion anterior del middle point
+    public Vec3[] previousFarPos; //Guarda la ultima posicion de "adelante"
     public Vec3[] middlePoint;
 
     public struct BSTCalc
@@ -42,11 +46,6 @@ public class Player : MonoBehaviour
 
         pointRoom = new Room[resolutionGrid];
         middlePoint = new Vec3[resolutionGrid];
-
-        for (int i = 0; i < resolutionGrid; i++)
-        {
-            middlePoint[i] = CalculateTheMiddle(intermediatePointsNear[i], intermediatePointsFar[i]);
-        }
     }
 
     private void Update()
@@ -80,6 +79,14 @@ public class Player : MonoBehaviour
 
         intermediatePointsFar = CalculateGrid(leftMiddlePosFar, rigthMiddlePosFar);
         intermediatePointsNear = CalculateGrid(leftMiddlePosNear, rigthMiddlePosNear);
+
+        //Setea los puntos en la mitad
+
+        if (!firstLoad)
+        {
+            InitializePoints();
+            firstLoad = true;
+        }
     }
 
     private Vec3[] CalculateGrid(Vec3 leftMiddlePos, Vec3 rigthMiddlePos)
@@ -140,14 +147,30 @@ public class Player : MonoBehaviour
         {
             if (inRoom.associatedRooms.Contains(pointRoom[i])) //Pregunta si es conexa
             {
-                Vec3 actualPoint = middlePoint[i];
-                middlePoint[i] = CalculateTheMiddle(actualPoint, intermediatePointsFar[i]);  //Hay que arreglar el calculo de la mitad pero ya casi esta
+                previousNearPos[i] = middlePoint[i]; //Si vas para adelante, guardas tu posicion actual, que es la de atras
+
+                if (previousFarPos[i] != null)
+                {
+                    middlePoint[i] = CalculateTheMiddle(middlePoint[i], intermediatePointsFar[i]); 
+                }
+                else
+                {
+                    middlePoint[i] = CalculateTheMiddle(middlePoint[i], previousFarPos[i]);
+                }
                 Debug.Log("sumamo");
             }
             else
             {
-                Vec3 actualPoint = middlePoint[i];
-                middlePoint[i] = CalculateTheMiddle(actualPoint, intermediatePointsNear[i]);
+                previousFarPos[i] = middlePoint[i];
+
+                if (previousNearPos[i] != null)
+                {
+                    middlePoint[i] = CalculateTheMiddle(middlePoint[i], intermediatePointsNear[i]);  
+                }
+                else
+                {
+                    middlePoint[i] = CalculateTheMiddle(middlePoint[i], previousNearPos[i]);
+                }
                 Debug.Log("restamo");
             }
         }
