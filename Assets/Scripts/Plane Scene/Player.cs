@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     const uint maxVertexPerPlane = 4;
     int resolutionGrid = 10;
 
-    int maxDivisions = 7; //Divisiones del BST
+    int maxDivisions = 6; //Divisiones del BST
 
     Vector3[] frustumCornerFar = new Vector3[maxVertexPerPlane];
     Vector3[] frustumCornerNear = new Vector3[maxVertexPerPlane];
@@ -31,6 +31,9 @@ public class Player : MonoBehaviour
     public Vec3[] previousFarPos; //Guarda la ultima posicion de "adelante"
     public Vec3[] middlePoint;
 
+    public bool[] checkedFirstFar; //No se por que entra 2 veces al principio de la primer funcion xd
+    public bool[] checkedFirstNear;
+
     public struct BSTCalc
     {
         public Vec3 aux1;
@@ -51,6 +54,9 @@ public class Player : MonoBehaviour
 
         pointRoom = new Room[resolutionGrid];
         middlePoint = new Vec3[resolutionGrid];
+
+        checkedFirstFar = new bool[resolutionGrid]; //No se por que entra 2 veces al principio de la primer funcion xd
+        checkedFirstNear = new bool[resolutionGrid];
     }
 
     private void Update()
@@ -158,7 +164,7 @@ public class Player : MonoBehaviour
         //Si el middle esta en una habitacion conexa, tiene que ir para adelante
         //Sino, tiene que ir para atras
 
-        for (int i = 0; i < resolutionGrid; i++)
+        for (int i = 0; i < resolutionGrid; i++)  //ESTA ENTRANDO DOS VECES ACA Y NO DEBERIA
         {
             if (inRoom.associatedRooms.Contains(pointRoom[i])) //Pregunta si es conexa
             {
@@ -166,13 +172,12 @@ public class Player : MonoBehaviour
 
                 if (previousFarPos[i] == Vec3.Zero) //Si es cero signfica que todavia no esta seteado, es la primer iteracion
                 {
-                    middlePoint[i] = CalculateTheMiddle(middlePoint[i], intermediatePointsFar[i]);
+                    middlePoint[i] = CalculateTheMiddle(middlePoint[i], intermediatePointsFar[i]);  
                 }
                 else
                 {
                     middlePoint[i] = CalculateTheMiddle(middlePoint[i], previousFarPos[i]);
                 }
-                Debug.Log("sumamo");
             }
             else
             {
@@ -186,8 +191,9 @@ public class Player : MonoBehaviour
                 {
                     middlePoint[i] = CalculateTheMiddle(middlePoint[i], previousNearPos[i]);
                 }
-                Debug.Log("restamo");
             }
+            
+            Debug.Log(i);
         }
     }
 
@@ -223,6 +229,14 @@ public class Player : MonoBehaviour
         for (int i = 0; i < resolutionGrid; i++)
         {
             Gizmos.DrawSphere(middlePoint[i], .2f);
+        }
+
+        Gizmos.color = Color.white;
+
+        for (int i = 0; i < resolutionGrid; i++)
+        {
+            Gizmos.DrawSphere(previousNearPos[i], .2f);
+            Gizmos.DrawSphere(previousFarPos[i], .2f);
         }
     }
 }

@@ -12,6 +12,7 @@ public class SetSelfPlane : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         plane = new Planes(transform.forward, transform.position);
         room.AddMesh(this);
         room.AddPlane(this.plane);

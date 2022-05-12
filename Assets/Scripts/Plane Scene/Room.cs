@@ -22,6 +22,13 @@ public class Room : MonoBehaviour
 
     int pointsInsideRoom = 0;
 
+    Vec3 offset; //Es para que si se queda en el borde, lo tome como que esta adentro
+
+    private void Start()
+    {
+        offset = new Vec3(0.5f, 0.5f, 0.5f);
+    }
+
     private void Update()
     {
         seeingRoom = CheckEnabled(); //Chequea si el jugador o alguno de los puntos del frustrum estan en el room
