@@ -31,9 +31,6 @@ public class Player : MonoBehaviour
     public Vec3[] previousFarPos; //Guarda la ultima posicion de "adelante"
     public Vec3[] middlePoint;
 
-    public bool[] checkedFirstFar; //No se por que entra 2 veces al principio de la primer funcion xd
-    public bool[] checkedFirstNear;
-
     public struct BSTCalc
     {
         public Vec3 aux1;
@@ -55,8 +52,6 @@ public class Player : MonoBehaviour
         pointRoom = new Room[resolutionGrid];
         middlePoint = new Vec3[resolutionGrid];
 
-        checkedFirstFar = new bool[resolutionGrid]; //No se por que entra 2 veces al principio de la primer funcion xd
-        checkedFirstNear = new bool[resolutionGrid];
     }
 
     private void Update()
@@ -180,8 +175,6 @@ public class Player : MonoBehaviour
                     middlePoint[i] = CalculateTheMiddle(middlePoint[i], previousFarPos[i]);
                 }
 
-                //Sin esta linea no se por que no funciona xd
-                //previousNearPos[i] -= CalculateTheMiddle(middlePoint[i], intermediatePointsFar[i]);
             }
             else
             {
@@ -196,7 +189,6 @@ public class Player : MonoBehaviour
                     middlePoint[i] = CalculateTheMiddle(middlePoint[i], previousNearPos[i]);
                 }
 
-                //previousFarPos[i] -= CalculateTheMiddle(middlePoint[i], intermediatePointsNear[i]);
             }
             
             Debug.Log(i);
