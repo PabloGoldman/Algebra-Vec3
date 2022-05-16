@@ -167,7 +167,7 @@ namespace CustomMath
         }
         public static Vec3 Lerp(Vec3 a, Vec3 b, float t)
         {
-            t = Mathf.Clamp01(t);
+            t = Mathf.Clamp01(t); //Lo clampea a 1 ya que t nunca va a ser mayor a 1
             return new Vec3(a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t, a.z + (b.z - a.z) * t);
         }
         public static Vec3 LerpUnclamped(Vec3 a, Vec3 b, float t) //Mismo que lerp solo que el valor de t no se clampea
@@ -197,9 +197,6 @@ namespace CustomMath
             {
                 return zero;
             }
-
-            //float num2 = Dot(vector, onNormal);
-            //return new Vec3(onNormal.x * num2 / num, onNormal.y * num2 / num, onNormal.z * num2 / num);
 
             return new Vec3((Dot(onNormal, vector) / (num)) * onNormal);
         }
