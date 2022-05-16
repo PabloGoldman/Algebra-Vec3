@@ -7,9 +7,8 @@ using EjerciciosAlgebra;
 
 public class Respuestas : MonoBehaviour
 {
-    //[SerializeField] [Range(1, 10)] int Exercise;
+    [SerializeField] [Range(1, 10)] int exercise;
 
-    public EjerciciosVector3.Ejercicio ejercicio;
     public Color vectorColor = Color.red;
 
     public Vector3 a;
@@ -33,21 +32,21 @@ public class Respuestas : MonoBehaviour
         VectorDebugger.UpdatePosition("a", a);
         VectorDebugger.UpdatePosition("b", b);
 
-        switch (ejercicio)
+        switch (exercise)
         {
-            case EjerciciosVector3.Ejercicio.Uno:
+            case 1:
                 VectorDebugger.UpdatePosition("Vec", (a + b));
                 break;
-            case EjerciciosVector3.Ejercicio.Dos:
+            case 2:
                 VectorDebugger.UpdatePosition("Vec", a - b);
                 break;
-            case EjerciciosVector3.Ejercicio.Tres:
+            case 3:
                 VectorDebugger.UpdatePosition("Vec", Vector3.Scale(a, b));
                 break;
-            case EjerciciosVector3.Ejercicio.Cuatro:
+            case 4:
                 VectorDebugger.UpdatePosition("Vec", Vec3.Cross(a, b));
                 break;
-            case EjerciciosVector3.Ejercicio.Cinco: // Lerp
+            case 5: // Lerp
                 t += Time.deltaTime;
 
                 if (t > 1)
@@ -57,23 +56,23 @@ public class Respuestas : MonoBehaviour
 
                 VectorDebugger.UpdatePosition("Vec", Vec3.Lerp(a, b, t));
                 break;
-            case EjerciciosVector3.Ejercicio.Seis:
+            case 6:
                 VectorDebugger.UpdatePosition("Vec", Vec3.Max(a, b));
                 break;
-            case EjerciciosVector3.Ejercicio.Siete:
+            case 7:
                 VectorDebugger.UpdatePosition("Vec", Vec3.Project(a, b));
                 break;
-            case EjerciciosVector3.Ejercicio.Ocho:
+            case 8:
                 float num = Vector3.Distance(a, b);
                 Vector3 vector3 = a + b;
                 Vector3 normalized = ((Vector3)vector3).normalized;
 
                 VectorDebugger.UpdatePosition("Vec", num * normalized);
                 break;
-            case EjerciciosVector3.Ejercicio.Nueve:
+            case 9:
                 VectorDebugger.UpdatePosition("Vec", Vec3.Reflect(a, ((Vector3)b.normalized)));
                 break;
-            case EjerciciosVector3.Ejercicio.Diez:
+            case 10:
                 t += Time.deltaTime;
                 VectorDebugger.UpdatePosition("Vec", Vec3.LerpUnclamped(a, b, t));
                 break;
