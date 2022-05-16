@@ -193,7 +193,7 @@ namespace CustomMath
 
             float num = Dot(onNormal, onNormal);
 
-            if (num < Mathf.Epsilon)
+            if (num < Mathf.Epsilon) // Si no pongo esto se chinga
             {
                 return zero;
             }
@@ -203,8 +203,7 @@ namespace CustomMath
         }
         public static Vec3 Reflect(Vec3 inDirection, Vec3 inNormal)
         {
-            float num = -2f * Dot(inNormal, inDirection);
-            return new Vec3(num * inNormal.x + inDirection.x, num * inNormal.y + inDirection.y, num * inNormal.z + inDirection.z);
+            return new Vec3(inDirection - 2 * Project(inDirection, inNormal));
         }
         public void Set(float newX, float newY, float newZ)
         {
