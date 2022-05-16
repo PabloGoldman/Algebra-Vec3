@@ -7,6 +7,8 @@ using EjerciciosAlgebra;
 
 public class Respuestas : MonoBehaviour
 {
+    //[SerializeField] [Range(1, 10)] int Exercise;
+
     public EjerciciosVector3.Ejercicio ejercicio;
     public Color vectorColor = Color.red;
 

@@ -189,20 +189,24 @@ namespace CustomMath
         public static Vec3 Project(Vec3 vector, Vec3 onNormal)
         {
             //Producto punto vendria a ser la proyeccion de A sobre B multiplicado por la magnitud de B, si le dividimos a eso la magnitud de B
-            //sacamos la magnitud de la proyeccion de A sobre B, si lo multiplicamos la direccion y por ende el vector proyeccion
+            //sacamos la magnitud de la proyeccion de A sobre B, si lo multiplicamos la direccion sacamos por ende el vector proyeccion
 
             float num = Dot(onNormal, onNormal);
 
-            if (num < Mathf.Epsilon) // Si no pongo esto se chinga
+            if (num < Mathf.Epsilon) //Si no pongo esto se chinga
             {
                 return zero;
             }
 
-            float num2 = Dot(vector, onNormal);
-            return new Vec3(onNormal.x * num2 / num, onNormal.y * num2 / num, onNormal.z * num2 / num);
+            //float num2 = Dot(vector, onNormal);
+            //return new Vec3(onNormal.x * num2 / num, onNormal.y * num2 / num, onNormal.z * num2 / num);
+
+            return new Vec3((Dot(onNormal, vector) / (num)) * onNormal);
         }
         public static Vec3 Reflect(Vec3 inDirection, Vec3 inNormal)
         {
+            //Estamos proyectando dos veces para "atras", nos da el reflejo
+
             return new Vec3(inDirection - 2 * Project(inDirection, inNormal));
         }
         public void Set(float newX, float newY, float newZ)
