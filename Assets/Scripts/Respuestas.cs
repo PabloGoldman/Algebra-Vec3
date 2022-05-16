@@ -67,7 +67,7 @@ public class Respuestas : MonoBehaviour
             case exercise.ocho:
                 float num = Vector3.Distance(a, b);
                 Vector3 vector3 = a + b;
-                Vector3 normalized = ((Vector3)vector3).normalized;
+                Vector3 normalized = (vector3).normalized;
 
                 VectorDebugger.UpdatePosition("Vec", num * normalized);
                 break;

@@ -219,16 +219,19 @@ namespace CustomMath
 
         public bool Raycast(Ray ray, out float enter)
         {
-            float num = Vector3.Dot(ray.direction, m_Normal);
-            float num2 = 0f - Vector3.Dot(ray.origin, m_Normal) - m_Distance;
-            if (Mathf.Approximately(num, 0f))
+            Vec3 auxNum = new Vec3(ray.origin.x, ray.origin.y, ray.origin.z); //Inicio del Rayo
+            Vec3 auxDen = new Vec3(ray.direction.x, ray.direction.y, ray.direction.z); //Fin del rayo
+            float num = Vec3.Dot(auxNum, normal) + distance; //Encuentra la distancia del rayo respecto de la normal del plano, y la multiplica por la distancia al Origen
+            float den = Vec3.Dot(auxDen, normal); //Encuentras la distancia del rayo respecto de la normal.
+
+            if (Mathf.Approximately(den, 0.0f)) //Si el denominador es parecido a 0 implica que el rayo es paralelo al plano
             {
-                enter = 0f;
+                enter = 0.0f;
                 return false;
             }
 
-            enter = num2 / num;
-            return enter > 0f;
+            enter = -num / den;
+            return enter > 0.0; //Si el rayo esta del lado positivo o negativo
         }
 
         public override string ToString()

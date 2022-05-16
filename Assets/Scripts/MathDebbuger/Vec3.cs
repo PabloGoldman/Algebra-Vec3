@@ -191,7 +191,7 @@ namespace CustomMath
             //Producto punto vendria a ser la proyeccion de A sobre B multiplicado por la magnitud de B, si le dividimos a eso la magnitud de B
             //sacamos la magnitud de la proyeccion de A sobre B, si lo multiplicamos la direccion sacamos por ende el vector proyeccion
 
-            float num = Dot(onNormal, onNormal);
+            float num = Dot(onNormal, onNormal); //Es la magnitud al cuadrado basicamente xd 
 
             if (num < Mathf.Epsilon) //Si no pongo esto se chinga
             {
